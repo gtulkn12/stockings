@@ -1,10 +1,19 @@
-
-
-<%= render @stock %>
-
-<div>
-  <%= link_to "Edit this stock", edit_stock_path(@stock) %> |
-  <%= link_to "Back to stocks", stocks_path %>
-
-  <%= button_to "Destroy this stock", @stock, method: :delete %>
-</div>
+<% begin %>
+  <% @ticker = StockQuote::Stock.quote(@stock.ticker) %>
+    <tr>
+      <td><strong><%= @ticker.company_name %></strong></td></br>
+      <td>Ticker Symbol: <%= @ticker.symbol %></td></br>
+      <td>Current Price: $<%= number_with_precision(@ticker.latest_price, :precision => 2, :delimiter => ',') %></td></br>
+      <td>Market Cap: $<%= number_with_precision(@ticker.market_cap, :precision => 2, :delimiter => ',') %></td></br>
+      <td>Exchange: <%= @ticker.primary_exchange %></td></br>
+      <div>
+        <%= link_to "Edit", edit_stock_path(@stock) %> |
+        <%= link_to "Back", stocks_path %>
+      </div>
+    </tr>
+<% rescue => e %>
+  <% e %>
+  <tr>
+    <td>The ticker <%= @stock.ticker %></td> does not exist!</td>
+  </tr>
+<% end %>    

@@ -1,23 +1,18 @@
-<h1> Stocking </h1>
+<h1>Stocking</h1>
 
-<%= form_tag root_path, :method => 'GET' do %>
-    <%= text_field_tag 'ticker', nil, placeholder: "Enter Ticker Symbol", size: 50 %>
-    <%= submit_tag 'Lookup' %>
+<%= form_tag root_path, :method => 'POST' do %>
+	<%= text_field_tag 'ticker', nil, placeholder: "Enter Ticker Symbol", size: 50 %>
+	<%= submit_tag 'Lookup' %>
 <% end %>
+
 <br/>
+
 <% if @stock %>
-    <%= @stock.company_name %>
-    (<%= @stock.symbol %>)<br/>
-    $<%= @stock.latest_price %><br/>
-    <%= @stock.primary_exchange %><br/>
-
-    <% @stock.inspect %>
-
+	<%= @stock.company_name %><br/>
+	$<%= @stock.latest_price %><br/>
 <% elsif @nothing %>
-    <%= @nothing %>
+	<%= @nothing %>
 <% end %>
-
 <% if @error %>
-    <%= @error %>
+	<%= @error %>
 <% end %>
-

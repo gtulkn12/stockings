@@ -1,19 +1,20 @@
 class HomeController < ApplicationController
   def index
-    if params[:ticker] == ""
-        @nothing = "Please enter a stock symbol!"
-    elsif params[:ticker]
-      StockQuote::Stock.new(api_key: "pk_9fa34831d0db4a2982e4f5eb49694fc1")
-      begin
-        @stock = StockQuote::Stock.quote(params[:ticker])
-        rescue RuntimeError
-      end
-      if !@stock
-        @error = "Hey! That stock symbol does not exist."
-      end
-    end
+    @api = StockQuote::Stock.new(api_key: 'pk_16a849fd637243a79fff90fa4d42bc5d')
+
+  	if params[:ticker] == ""
+  		@nothing = "Hey! You Forgot To Enter A Symbol"
+  	elsif params[:ticker]
+  		@stock = StockQuote::Stock.quote(params[:ticker])
+  		if !@stock 
+  			@error = "Hey! That Stock Symbol Doesn't Exist. Please Try Again."
+  		end
+
+  	end
+
   end
 
   def about
   end
+
 end
